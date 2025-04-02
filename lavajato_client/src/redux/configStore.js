@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import cartSlice from "./cartSlice";
+import clientSlice from "./clientSlice";
 
 import { combineReducers } from "redux";
 import {
@@ -14,7 +16,8 @@ import {
 import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
-  //aca van los slices
+  cart: cartSlice,
+  client: clientSlice,
 });
 
 const persistConfig = {

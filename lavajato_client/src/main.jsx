@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
-import { store, persistor } from "./redux/configStore"; // Asegúrate de la ruta correcta
+import { store, persistor } from "./redux/configStore";
+import "bootstrap/dist/css/bootstrap.min.css"; // Asegúrate de la ruta correcta
 import "./index.css";
 import App from "./App.jsx";
 

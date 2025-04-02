@@ -70,41 +70,6 @@ async function destroy(req, res) {
     return res.status(500).json({ message: error.message });
   }
 }
-/* async function register(req, res) {
-  try {
-    // send email
-    const newRegister = await Registers.create();
-    await newRegister.generateToken(req.body.isAdmin);
-    const adminOrMember = req.body.isAdmin == true ? "administrador" : "miembro";
-    newRegister.save().then((register) => {
-      const link = process.env.FRONT_END_URL + "/registro/" + adminOrMember + "/" + register.token;
-      const mailOptions = {
-        to: req.body.email,
-        from: process.env.FROM_EMAIL,
-        subject: `Registro de ${adminOrMember}`,
-        content: [
-          {
-            type: "text/html",
-            value: `Hola! <br/> 
-            Por favor dirigete <a href="${link}">aquí</a> para realizar tu registro de ${adminOrMember}. <br/><br/> 
-            Si no pediste un registro de ${adminOrMember} por favor ignora este correo.<br/>`,
-          },
-        ],
-      };
-
-      sgMail.send(mailOptions, (error, result) => {
-        if (error) return res.status(500).json({ error });
-
-        res
-          .status(200)
-          .json({ message: "A sing up email has been sent to " + req.body.email + "." });
-      });
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error });
-  }
-} */
 
 module.exports = {
   index,

@@ -58,7 +58,7 @@ module.exports = (sequelize, Model, DataTypes, Order) => {
     },
     {
       sequelize,
-      modelName: "member",
+      modelName: "client",
       hooks: {
         beforeBulkCreate: async (members, options) => {
           for (const member of members) {

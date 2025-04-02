@@ -10,15 +10,19 @@ module.exports = (sequelize, Model, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
+      type: {
         type: DataTypes.STRING(140),
         allowNull: false,
         validate: {
           notEmpty: true,
         },
       },
-      description: {
-        type: DataTypes.TEXT,
+      carType: {
+        type: DataTypes.STRING(140),
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
       price: {
         type: DataTypes.DECIMAL,
@@ -37,14 +41,14 @@ module.exports = (sequelize, Model, DataTypes) => {
       hooks: {
         beforeBulkCreate: async (services, options) => {
           for (const service of services) {
-            service.slug = slugify(service.name, {
+            service.slug = slugify(service.type, {
               lower: true,
               strict: true,
             });
           }
         },
         beforeCreate: async (service, options) => {
-          service.slug = slugify(service.name, {
+          service.slug = slugify(service.type, {
             lower: true,
             strict: true,
           });

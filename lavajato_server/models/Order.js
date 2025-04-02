@@ -7,14 +7,25 @@ module.exports = (sequelize, Model, DataTypes, Product, Item) => {
   Order.init(
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.BIGINT,
         primaryKey: true,
+        autoIncrement: true,
       },
-      total: {
-        type: DataTypes.DECIMAL,
+      firstname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       cart: {
         type: DataTypes.JSON,
+        allowNull: false,
       },
     },
     {

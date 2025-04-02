@@ -27,6 +27,7 @@ const Log = require("./Log")(sequelize, Model, DataTypes);
 const Client = require("./Client")(sequelize, Model, DataTypes);
 const Service = require("./Service")(sequelize, Model, DataTypes);
 const Order = require("./Order")(sequelize, Model, DataTypes);
+const Day = require("./Day")(sequelize, Model, DataTypes);
 
 // Associations
 Order.belongsTo(Client);
@@ -39,4 +40,5 @@ module.exports = {
   Service,
   Client,
   Order,
+  Day,
 };
