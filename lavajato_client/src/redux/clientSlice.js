@@ -8,8 +8,10 @@ const clientSlice = createSlice({
       state.firstname = action.payload.firstname;
       state.lastname = action.payload.lastname;
       state.email = action.payload.email;
-      state.matrícula = action.payload.matrícula;
-      state.carType = action.payload.carType;
+      state.phone = action.payload.phone;
+      state.marca = action.payload.car.marca;
+      state.modelo = action.payload.car.modelo;
+      state.carType = action.payload.car.carType;
     },
   },
 });

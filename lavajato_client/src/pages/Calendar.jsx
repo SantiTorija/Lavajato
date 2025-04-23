@@ -15,14 +15,18 @@ function MyCalendar() {
   /*   const [availableDays, setAvailableDays] = useState([]);*/
   const [loading, setLoading] = useState(false);
 
-  const client = useSelector((state) => state.client);
+  const orders = useSelector((state) => state.orders);
+
+  useEffect(() => {
+    orders && orders.length > 0;
+  }, []);
 
   // Fetch availability when month/year changes
   const { availableDays } = useFetchAvailableDays(activeDate);
 
   useEffect(() => {
-    console.log(activeDate);
-  }, [activeDate]);
+    console.log(orders);
+  }, []);
 
   // Handle calendar view change
   const handleActiveStartDateChange = (activeStartDate) => {
@@ -113,7 +117,9 @@ function MyCalendar() {
         <Container className="w-100 d-flex justify-content-center align-items-center mt-5">
           <Row className="align-items-between gap-4">
             <Col className="w-100 d-flex flex-column align-items-start mb-2">
+              {/* <span>{orders ? `Bienvenido ${orders[0].firstname}` : ""}</span> */}
               <strong className="mb-3"> DIAS DISPONIBLES</strong>
+
               {loading ? (
                 <p>Loading availableDays...</p>
               ) : (

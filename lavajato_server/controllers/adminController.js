@@ -1,4 +1,4 @@
-const { Admin, Registers } = require("../models");
+const { Admin } = require("../models");
 const { Op } = require("sequelize");
 const crypto = require("crypto");
 

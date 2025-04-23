@@ -4,6 +4,7 @@ import useFormatDate from "../hooks/useFormatDate";
 import { emptyCart } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import useStoreOrder from "../hooks/useStoreOrder";
+import useUpdateOrder from "../hooks/useUpdateOrder";
 import NavbarComponent from "../components/Navbar";
 import { Card, Container, Row } from "react-bootstrap";
 import styles from "./confirmation.module.css";
@@ -13,15 +14,13 @@ function Confirmation() {
   const { firstname, lastname, email, carType } = useSelector(
     (state) => state.client
   );
+  const orders = useSelector((state) => state.orders);
+
+  console.log(cart[0]);
+
   const { total, tipoLavado } = useSelector((state) => state.cart[0]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(cart);
-    console.log(carType);
-    return;
-  }, []);
 
   const handleReturnToCalendar = () => {
     dispatch(emptyCart());
@@ -32,6 +31,7 @@ function Confirmation() {
     cart[0].date,
     cart[0].slot
   );
+  const { updateOrder } = useUpdateOrder();
 
   const handleStoreOrder = async () => {
     try {
@@ -51,6 +51,28 @@ function Confirmation() {
       console.log(error);
     }
   };
+
+  const handleUpdateOrder = async () => {
+    try {
+      await updateOrder(
+        {
+          firstname: firstname,
+          lastname: lastname,
+          phone: email,
+          cart: cart,
+          total: total,
+          service: tipoLavado,
+        },
+        orders[0]
+      );
+      dispatch(emptyCart());
+      navigate("/gracias");
+    } catch (error) {
+      alert("hubo un error");
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <NavbarComponent />
@@ -82,6 +104,11 @@ function Confirmation() {
 
             <span className="fs-4">TOTAL: $ {total}</span>
           </Card.Body>
+          <p className="text-center">
+            Atención: Esta reserva se podrá cancelar hasta 24 horas antes de la
+            hora. En caso de no presentarse no podrá reservar por un período de
+            dos meses
+          </p>
         </Card>
         <div className="d-flex justify-content-center gap-3 mt-4">
           <button
@@ -92,7 +119,9 @@ function Confirmation() {
           </button>
           <button
             className={styles.actionButton}
-            onClick={() => handleStoreOrder()}
+            onClick={() =>
+              orders.length > 0 ? handleUpdateOrder() : handleStoreOrder()
+            }
           >
             RESERVAR
           </button>

@@ -6,6 +6,8 @@ import useFormatDate from "../hooks/useFormatDate";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import { Container, Col, Row } from "react-bootstrap";
+import MoreInfoModal from "./MoreInfoModal";
+import styles from "./availableSlot.module.css";
 
 const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +20,8 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
   const [lavadoYEncerado, setLavadoYEncerado] = useState("");
   const [tipoLavado, setTipoLavado] = useState(null);
   const [total, setTotal] = useState("");
+  const [modalShowEncerado, setModalShowEncerado] = useState(false);
+  const [modalShowCompleto, setModalShowCompleto] = useState(false);
 
   AvailableSlots.propTypes = {
     slotsAvailable: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -111,12 +115,29 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
           <div className="d-flex flex-column align-items-start gap-3 w-100 w-md-100">
             <strong>TIPO DE LAVADO</strong>
             <Form className="d-flex flex-column align-items-start gap-2 w-100">
-              <Form.Check // prettier-ignore
-                type="switch"
-                id="custom-switch-completo"
-                label={`Lavado completo - $${lavado}`}
-                checked={tipoLavado === "Lavado completo"}
-                onChange={() => handleChange("Lavado completo", lavado)}
+              <div className="d-flex align-items-center">
+                <Form.Check // prettier-ignore
+                  type="switch"
+                  id="custom-switch-completo"
+                  checked={tipoLavado === "Lavado completo"}
+                  onChange={() => handleChange("Lavado completo", lavado)}
+                />
+                <span>
+                  Lavado completo -{" "}
+                  <button
+                    type="button"
+                    className={styles.moreInfoButton}
+                    onClick={() => setModalShowCompleto(true)}
+                  >
+                    Mas info -
+                  </button>{" "}
+                  ${`${lavado}`}
+                </span>
+              </div>
+              <MoreInfoModal
+                serviceType={"Lavado completo"}
+                show={modalShowCompleto}
+                onHide={() => setModalShowCompleto(false)}
               />
               {/* <Form.Check className="d-flex flex-row-reverse align-items-center justify-content-between px-0 w-75">
                 <Form.Check
@@ -127,14 +148,31 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
                 />
                 <Form.Check.Label htmlFor="custom-switch">{`Lavado completo - $${lavado}`}</Form.Check.Label>
               </Form.Check> */}
-              <Form.Check // prettier-ignore
-                type="switch"
-                id="custom-switch-encerado"
-                checked={tipoLavado === "Lavado completo y encerado"}
-                label={`Lavado con encerado - $${lavadoYEncerado}`}
-                onChange={() =>
-                  handleChange("Lavado completo y encerado", lavadoYEncerado)
-                }
+              <div className="d-flex w-100 align-items-center">
+                <Form.Check // prettier-ignore
+                  type="switch"
+                  id="custom-switch-encerado"
+                  checked={tipoLavado === "Lavado completo y encerado"}
+                  onChange={() =>
+                    handleChange("Lavado completo y encerado", lavadoYEncerado)
+                  }
+                />
+                <span className="w-100">
+                  Lavado con encerado -{" "}
+                  <button
+                    type="button"
+                    onClick={() => setModalShowEncerado(true)}
+                    className={styles.moreInfoButton}
+                  >
+                    Mas info -
+                  </button>{" "}
+                  ${`${lavadoYEncerado}`}
+                </span>
+              </div>
+              <MoreInfoModal
+                serviceType={"Lavado completo y encerado"}
+                show={modalShowEncerado}
+                onHide={() => setModalShowEncerado(false)}
               />
               {/* <Form.Check className="d-flex flex-row-reverse align-items-center justify-content-between px-0 w-75">
                 <Form.Check
@@ -151,7 +189,8 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
           </div>
           <Row className="w-100 justify-content-center pt-3">
             <button
-              className="mt-4 action-button"
+              type="submit"
+              className="mt-2 action-button"
               onClick={() => handleSeveReserve()}
             >
               Confirmar reserva

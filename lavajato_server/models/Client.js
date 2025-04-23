@@ -33,33 +33,21 @@ module.exports = (sequelize, Model, DataTypes, Order) => {
         },
         unique: true,
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-      },
 
       phone: {
         type: DataTypes.STRING,
         allowNull: true,
       },
 
-      resetPasswordToken: {
-        type: DataTypes.STRING,
-        required: false,
-      },
-
-      resetPasswordExpires: {
-        type: DataTypes.DATE,
-        required: false,
+      car: {
+        type: DataTypes.JSON,
+        required: true,
       },
     },
     {
       sequelize,
       modelName: "client",
-      hooks: {
+      /* hooks: {
         beforeBulkCreate: async (members, options) => {
           for (const member of members) {
             member.allowTransfer = true;
@@ -78,11 +66,11 @@ module.exports = (sequelize, Model, DataTypes, Order) => {
             order.destroy();
           }
         },
-      },
+      }, */
 
       defaultScope: {
         attributes: {
-          exclude: ["password", "createdAt", "updatedAt"],
+          exclude: ["createdAt", "updatedAt"],
         },
       },
       scopes: {
@@ -93,7 +81,7 @@ module.exports = (sequelize, Model, DataTypes, Order) => {
     }
   );
 
-  Client.prototype.isValidPassword = async function (password) {
+  /* Client.prototype.isValidPassword = async function (password) {
     const member = await Client.scope("privateInfo").findByPk(this.id);
     const valid = await bcrypt.compare(password, member.password);
     return valid;
@@ -110,6 +98,6 @@ module.exports = (sequelize, Model, DataTypes, Order) => {
     this.resetPasswordExpires = undefined;
     this.save();
   };
-
+ */
   return Client;
 };

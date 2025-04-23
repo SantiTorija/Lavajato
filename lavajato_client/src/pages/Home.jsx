@@ -1,27 +1,17 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarComponent from "../components/Navbar";
 import styles from "./home.module.css";
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row, Button } from "react-bootstrap";
 import background from "../assets/images/image.webp";
+import { FaHandPointDown } from "react-icons/fa6";
+import CenteredModal from "../components/ExistingReserveModal.jsx";
+import EmailModal from "../components/emailModal.jsx";
 
 function Home() {
-  const [admin, setAdmin] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+  const [emailModalShow, setEmailModalShow] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const getAdmin = async () => {
-      const response = await axios({
-        method: "GET",
-        url: `${import.meta.env.VITE_API_URL}/admins`,
-      });
-      setAdmin(response.data);
-      console.log(admin);
-      console.log(response.data);
-    };
-    getAdmin();
-  }, []);
 
   return (
     <>
@@ -42,19 +32,36 @@ function Home() {
           </Col>
           <Col className="col-12 col-md-7 text-center p-0">
             <h2 className={`${styles.title} d-block d-md-none mb-4`}>
-              BIENVENIDO!
+              Bienvenido!
             </h2>
-            <img className="w-100" src={background} alt="" srcset="" />
+            <h3 className={`${styles.subtitle} d-block d-md-none mb-4`}>
+              Acá podés agendar hora para tu proximo lavado
+            </h3>
+            <img className="w-100" src={background} alt="" />
             <p className={`${styles.font} d-block d-md-none mt-3`}>
-              comenzá tu reserva de hora haciendo click abajo
+              comenzá haciendo click abajo <FaHandPointDown size={25} />
             </p>
-            <div className="d-flex justify-content-center w-100 d-block d-md-none py-4">
+            <div className="d-flex flex-column justify-content-center align-items-center gap-3 w-100 d-block d-md-none py-4">
               <button
                 className="action-button "
-                onClick={() => navigate("/datos-cliente")}
+                onClick={() => setEmailModalShow(true)}
               >
                 RESERVAR
               </button>
+              <EmailModal
+                show={emailModalShow}
+                onHide={() => setEmailModalShow(false)}
+              />
+              <Button
+                className={styles.buttonLink}
+                onClick={() => setModalShow(true)}
+              >
+                Ya tengo una reserva
+              </Button>
+              <CenteredModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+              />
             </div>
           </Col>
         </Row>

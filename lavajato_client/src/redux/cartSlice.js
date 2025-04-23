@@ -10,10 +10,13 @@ const cartSlice = createSlice({
     emptyCart(state) {
       state.length = 0;
     },
+    addReserveToEdit(state, action) {
+      state.push({ ...action.payload });
+    },
   },
 });
 
 const { actions, reducer } = cartSlice;
-export const { addReserve, emptyCart } = actions;
+export const { addReserve, emptyCart, addReserveToEdit } = actions;
 
 export default reducer;
