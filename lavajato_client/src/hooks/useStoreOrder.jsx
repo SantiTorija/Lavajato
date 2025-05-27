@@ -21,8 +21,8 @@ const useStoreOrder = (date, slot) => {
           cart: order.cart,
         },
       });
-      console.log(response.data);
       setError(null);
+      return response;
     } catch (err) {
       setError(err);
       console.error("Error fetching availability:", err);

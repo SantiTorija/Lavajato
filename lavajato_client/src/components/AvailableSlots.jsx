@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addReserve } from "../redux/cartSlice";
+import { addDateAndTime } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import useFormatDate from "../hooks/useFormatDate";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row, Button } from "react-bootstrap";
 import MoreInfoModal from "./MoreInfoModal";
 import styles from "./availableSlot.module.css";
+import { next, prev } from "../redux/reserveStepSlice";
+import { emptyDateTime } from "../redux/cartSlice";
 
 const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
   const [loading, setLoading] = useState(false);
@@ -28,6 +30,8 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
     selectedDay: PropTypes.string.isRequired,
   };
 
+  const formatDate = useFormatDate(selectedDay);
+
   const slot = [
     "08 AM - 10 AM",
     "10 AM - 12 PM",
@@ -47,7 +51,7 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
       setLavadoYEncerado("1500");
     }
     console.log(slotsAvailable);
-  }, []);
+  }, [carType]);
 
   const getSlotNumber = (timeRange) => {
     return (
@@ -65,15 +69,12 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
       alert("seleccione un horario");
     } else {
       dispatch(
-        addReserve({
+        addDateAndTime({
           date: selectedDay,
           slot: selectedSlot,
-          total: total,
-          carType,
-          tipoLavado,
         })
       );
-      navigate("/confirmation");
+      dispatch(next());
     }
     return;
   };
@@ -81,6 +82,11 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
   const handleChange = (type, price) => {
     setTipoLavado((prev) => (prev === type ? null : type));
     setTotal(price);
+  };
+
+  const handlePrev = () => {
+    dispatch(emptyDateTime());
+    dispatch(prev());
   };
 
   useEffect(() => {
@@ -94,8 +100,8 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
       ) : slotsAvailable.length < 4 ? (
         <div className=" d-flex flex-column justify-content-between h-100">
           <div className="d-flex flex-column align-items-start gap-3">
-            <strong>LUGARES DISPONIBLES</strong>
-            <select
+            <strong className="mb-4">Disponibles para {formatDate}:</strong>
+            {/* <select
               className="mb-4"
               value={selectedSlot}
               name=""
@@ -110,11 +116,11 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
                   {slot}
                 </option>
               ))}
-            </select>
+            </select> */}
           </div>
           <div className="d-flex flex-column align-items-start gap-3 w-100 w-md-100">
-            <strong>TIPO DE LAVADO</strong>
-            <Form className="d-flex flex-column align-items-start gap-2 w-100">
+            {/* <strong className="">Seleccione tipo de lavado</strong> */}
+            {/*  <Form className="d-flex flex-column align-items-start gap-2 w-100">
               <div className="d-flex align-items-center">
                 <Form.Check // prettier-ignore
                   type="switch"
@@ -122,7 +128,7 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
                   checked={tipoLavado === "Lavado completo"}
                   onChange={() => handleChange("Lavado completo", lavado)}
                 />
-                <span>
+                <span className="text-white">
                   Lavado completo -{" "}
                   <button
                     type="button"
@@ -139,15 +145,7 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
                 show={modalShowCompleto}
                 onHide={() => setModalShowCompleto(false)}
               />
-              {/* <Form.Check className="d-flex flex-row-reverse align-items-center justify-content-between px-0 w-75">
-                <Form.Check
-                  type="switch"
-                  id="custom-switch"
-                  checked={tipoLavado === "Lavado completo"}
-                  onChange={() => handleChange("Lavado completo", lavado)}
-                />
-                <Form.Check.Label htmlFor="custom-switch">{`Lavado completo - $${lavado}`}</Form.Check.Label>
-              </Form.Check> */}
+              
               <div className="d-flex w-100 align-items-center">
                 <Form.Check // prettier-ignore
                   type="switch"
@@ -157,7 +155,7 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
                     handleChange("Lavado completo y encerado", lavadoYEncerado)
                   }
                 />
-                <span className="w-100">
+                <span className="w-100 text-white">
                   Lavado con encerado -{" "}
                   <button
                     type="button"
@@ -174,28 +172,38 @@ const AvailableSlots = ({ slotsAvailable, selectedDay }) => {
                 show={modalShowEncerado}
                 onHide={() => setModalShowEncerado(false)}
               />
-              {/* <Form.Check className="d-flex flex-row-reverse align-items-center justify-content-between px-0 w-75">
-                <Form.Check
-                  type="switch"
-                  id="custom-switch-encerado"
-                  checked={tipoLavado === "Lavado completo y encerado"}
-                  onChange={() =>
-                    handleChange("Lavado completo y encerado", lavadoYEncerado)
-                  }
-                />
-                <Form.Check.Label htmlFor="custom-switch-encerado">{`Lavado con encerado - $${lavadoYEncerado}`}</Form.Check.Label>
-              </Form.Check> */}
-            </Form>
+              
+            </Form> */}
+            <div className={styles.slotsContainer}>
+              {slotsToShow(slot, slotsAvailable).map((slotItem) => (
+                <div
+                  key={slotItem}
+                  onClick={() => setSelectedSlot(slotItem)}
+                  className={`${styles.slotItem} ${
+                    selectedSlot === slotItem ? styles.active : ""
+                  }`}
+                >
+                  {slotItem}
+                </div>
+              ))}
+            </div>
           </div>
-          <Row className="w-100 justify-content-center pt-3">
-            <button
-              type="submit"
-              className="mt-2 action-button"
+          <div className="w-100 d-flex justify-content-center pt-3 gap-2">
+            <Button
+              type="button"
+              className="mt-2 back-button w-50"
+              onClick={() => handlePrev()}
+            >
+              Atrás
+            </Button>
+            <Button
+              type="button"
+              className="mt-2 action-button w-50"
               onClick={() => handleSeveReserve()}
             >
-              Confirmar reserva
-            </button>
-          </Row>
+              Siguiente
+            </Button>
+          </div>
         </div>
       ) : (
         "No hay espacio disponible"

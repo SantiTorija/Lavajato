@@ -1,7 +1,7 @@
 .form{
-    background-color: #22A2AB;
+    background-color: #ffffff;
     border-radius: 20px;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 /* Dispositivos pequeños (teléfonos en modo retrato y dispositivos menores a 576px) */

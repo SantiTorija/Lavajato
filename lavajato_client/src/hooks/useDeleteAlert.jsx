@@ -26,8 +26,8 @@ const useDeleteAlert = () => {
       `${import.meta.env.VITE_API_URL}/order/${email.trim()}`
     );
     if (responseOrder) {
-      const date = responseOrder.data[0].cart[0].date;
-      const slot = responseOrder.data[0].cart[0].slot;
+      const date = responseOrder.data[0].cart.date;
+      const slot = responseOrder.data[0].cart.slot;
       MySwal.fire({
         title: "Atención",
         html: `
@@ -49,8 +49,8 @@ const useDeleteAlert = () => {
           const responseDelete = await axios.delete(
             `${import.meta.env.VITE_API_URL}/order/${
               responseOrder.data[0].id
-            }/${responseOrder.data[0].cart[0].date}/${
-              responseOrder.data[0].cart[0].slot
+            }/${responseOrder.data[0].cart.date}/${
+              responseOrder.data[0].cart.slot
             }`
           );
 

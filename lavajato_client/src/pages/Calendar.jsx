@@ -30,6 +30,7 @@ function MyCalendar() {
 
   // Handle calendar view change
   const handleActiveStartDateChange = (activeStartDate) => {
+    setSelectedDay(null);
     setLoading(true);
     if (activeStartDate) {
       setActiveDate(activeStartDate);
@@ -113,12 +114,10 @@ function MyCalendar() {
   return (
     availableDays && (
       <>
-        <NavbarComponent />
-        <Container className="w-100 d-flex justify-content-center align-items-center mt-5">
-          <Row className="align-items-between gap-4">
-            <Col className="w-100 d-flex flex-column align-items-start mb-2">
+        <Container className="w-100 px-4">
+          <Row className="align-items-between gap-4  d-flex justify-content-center align-items-center mt-5 bg-white rounded-3 py-2">
+            <Col className="w-100  d-flex flex-column align-items-start mb-2 border-white ">
               {/* <span>{orders ? `Bienvenido ${orders[0].firstname}` : ""}</span> */}
-              <strong className="mb-3"> DIAS DISPONIBLES</strong>
 
               {loading ? (
                 <p>Loading availableDays...</p>

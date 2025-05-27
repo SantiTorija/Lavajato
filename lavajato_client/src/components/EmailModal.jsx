@@ -15,7 +15,7 @@ function EmailModal(props) {
     <Container>
       <Modal
         {...props}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -44,14 +44,11 @@ function EmailModal(props) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">
-          <Button
-            className="bg-light text-dark border-1 border-dark w-25"
-            onClick={props.onHide}
-          >
+          <Button className="back-button" onClick={props.onHide}>
             Cerrar
           </Button>
           <Button
-            className="action-button w-25"
+            className="action-button"
             onClick={() => fetchIsClient(email)}
           >
             Siguiente

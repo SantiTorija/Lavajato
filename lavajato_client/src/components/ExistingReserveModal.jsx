@@ -52,19 +52,12 @@ function ExistingReserveModal(props) {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-start">
-          <span className={styles.title}>Que acción desea realizar?</span>
           <div className="d-flex justify-content-between align-items-center gap-2 mt-3 w-100">
             <Button
               onClick={() => email && fetchOrderToEdit(email)}
               className="action-button"
             >
-              Elegir otra hora
-            </Button>
-            <Button
-              onClick={() => handleDelete(email)}
-              className="action-button"
-            >
-              Cancelar reserva
+              Buscar
             </Button>
           </div>
         </Modal.Footer>

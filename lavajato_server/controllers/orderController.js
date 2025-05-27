@@ -44,7 +44,7 @@ const orderController = {
   async update(req, res) {
     try {
       await findAndUpdate(req.query.dateToEdit, req.query.slotToEdit);
-      await findOrCreate(req.body.cart[0].date, req.body.cart[0].slot);
+      await findOrCreate(req.body.cart.date, req.body.cart.slot);
       const [updated] = await Order.update(req.body, {
         where: { id: req.params.id },
       });

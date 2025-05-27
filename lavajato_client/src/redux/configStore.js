@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartSlice from "./cartSlice";
 import clientSlice from "./clientSlice";
 import orderToEditSlice from "./orderToEditSlice";
+import servicesSlice from "./servicesSlice";
+import resererveStepSlice from "./reserveStepSlice";
 
 import { combineReducers } from "redux";
 import {
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
   cart: cartSlice,
   client: clientSlice,
   orders: orderToEditSlice,
+  services: servicesSlice,
+  reserveStep: resererveStepSlice,
 });
 
 const persistConfig = {

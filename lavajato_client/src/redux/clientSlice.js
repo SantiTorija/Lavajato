@@ -13,10 +13,13 @@ const clientSlice = createSlice({
       state.modelo = action.payload.car.modelo;
       state.carType = action.payload.car.carType;
     },
+    removeClient(state) {
+      Object.keys(state).forEach((key) => delete state[key]);
+    },
   },
 });
 
 const { actions, reducer } = clientSlice;
-export const { addClient } = actions;
+export const { addClient, removeClient } = actions;
 
 export default reducer;

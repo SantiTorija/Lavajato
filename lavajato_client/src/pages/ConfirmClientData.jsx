@@ -6,6 +6,8 @@ import NavbarComponent from "../components/Navbar";
 import { Container, Row, Form, Button } from "react-bootstrap";
 import styles from "./clientDataForm.module.css";
 import useStoreClient from "../hooks/useStoreClient";
+import { next } from "../redux/reserveStepSlice";
+import Footer from "../components/Footer";
 
 const ConfirmClientDataForm = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,10 @@ const ConfirmClientDataForm = () => {
   );
   const [nuevaMarca, setNuevaMarca] = useState("");
   const [nuevoModelo, setNuevoModelo] = useState("");
-  const [newPhone, setNewPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+598");
+  const [localPhone, setLocalPhone] = useState(
+    phone ? phone.replace(/^\+\d{1,3}/, "") : ""
+  );
   const [newcarType, setNewCarType] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -26,75 +31,85 @@ const ConfirmClientDataForm = () => {
 
   return (
     <>
-      <NavbarComponent />
-      <Container className=" d-flex flex-column justify-content-center align-items-center">
-        <Form
-          className={`p-4 border mt-4 ${styles.form}`}
-          onSubmit={handleSubmit}
-        >
-          <h2>
-            Bienvenido {firstname} {lastname}
-          </h2>
+      <Container className=" d-flex flex-column justify-content-center align-items-center pb-4">
+        <Form className={`  mt-4 `} onSubmit={handleSubmit}>
+          <h2>Bienvenido {firstname}</h2>
 
           <span>
             Por favor, confirme que los siguientes datos sean correctos
           </span>
 
-          <Form.Group className="mt-2" controlId="formApellido">
+          <Form.Group className="mt-2" controlId="formTelefono">
             <Form.Label>Teléfono</Form.Label>
+            <div className="d-flex gap-2 align-items-center">
+              <Form.Select
+                style={{ maxWidth: 110 }}
+                value={countryCode}
+                onChange={(e) => setCountryCode(e.target.value)}
+                required
+              >
+                <option value="+598">🇺🇾 +598 (UY)</option>
+                <option value="+54">🇦🇷 +54 (AR)</option>
+                <option value="+55">🇧🇷 +55 (BR)</option>
+                <option value="+1">🇺🇸 +1 (US)</option>
+              </Form.Select>
+              <Form.Control
+                type="tel"
+                pattern="[0-9]{7,12}"
+                placeholder="Número sin código"
+                value={localPhone}
+                onChange={(e) => setLocalPhone(e.target.value)}
+                required
+                style={{ maxWidth: 200 }}
+              />
+            </div>
+          </Form.Group>
+
+          <Form.Group className="mt-2" controlId="formMatricula">
+            <Form.Label>Marca</Form.Label>
             <Form.Control
               type="text"
-              value={phone}
-              onChange={(e) => setNewPhone(e.target.value)}
-              required
+              value={marca}
+              onChange={(e) => setNuevaMarca(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mt-2" controlId="formMatricula">
+            <Form.Label>Modelo</Form.Label>
+            <Form.Control
+              type="text"
+              value={modelo}
+              onChange={(e) => setNuevoModelo(e.target.value)}
             />
           </Form.Group>
 
-          <div className="d-flex gap-2">
-            <Form.Group className="mt-2" controlId="formMatricula">
-              <Form.Label>Marca</Form.Label>
-              <Form.Control
-                type="text"
-                value={marca}
-                onChange={(e) => setNuevaMarca(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mt-2" controlId="formMatricula">
-              <Form.Label>Modelo</Form.Label>
-              <Form.Control
-                type="text"
-                value={modelo}
-                onChange={(e) => setNuevoModelo(e.target.value)}
-              />
-            </Form.Group>
-          </div>
-
-          <Form.Group className="mt-2" controlId="formTipoAuto">
+          <Form.Group className="mt-3" controlId="formTipoAuto">
             <Form.Label>Tipo de auto</Form.Label>
-            {[
-              "Auto - furgón chico",
-              "Pick Up pequeñas - SUV",
-              "Pick up - SUV 7 plazas",
-            ].map((type) => (
-              <Form.Check
-                key={type}
-                id={type}
-                type="radio"
-                label={type}
-                name={type}
-                value={type}
-                checked={carType === type}
-                onChange={() => setNewCarType(type)}
-              />
-            ))}
+            <Form.Select
+              value={carType}
+              onChange={(e) => setNewCarType(e.target.value)}
+            >
+              <option value="" disabled>
+                Selecciona un tipo de auto
+              </option>
+              {[
+                "Auto - furgón chico",
+                "Pick Up pequeñas - SUV",
+                "Pick up - SUV 7 plazas",
+              ].map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
-          <Row className="w-100 justify-content-center pt-4">
-            <Button className="action-button" type="submit">
-              SIGUIENTE
-            </Button>
-          </Row>
         </Form>
       </Container>
+      <div className="d-flex justify-content-center mb-2 gap-2 px-3">
+        <Button className="back-button w-50">Vover</Button>
+        <Button className="action-button w-50" onClick={() => dispatch(next())}>
+          Siguiente
+        </Button>
+      </div>
     </>
   );
 };

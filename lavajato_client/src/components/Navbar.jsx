@@ -1,35 +1,72 @@
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import Offcanvas from "react-bootstrap/Offcanvas";
 import styles from "./navbar.module.css";
 import logoNuevo from "../assets/images/logoNuevo.png";
+import { Link } from "react-router-dom";
+import { FaBars } from "react-icons/fa6";
+import { useState } from "react";
 
 function NavbarComponent() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <Navbar expand="xl" className={styles.navbar}>
+    <Navbar expand="md" className={styles.navbar}>
       <Container>
-        <Navbar.Brand href="/">
-          <img style={{ width: "7rem" }} src={logoNuevo} alt="" />
-        </Navbar.Brand>
-        {/*  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse> */}
+        <nav className="d-flex align-items-center justify-content-between">
+          <Navbar.Brand as={Link} to="/">
+            <img style={{ width: "7rem" }} src={logoNuevo} alt="" />
+          </Navbar.Brand>
+          <div className="d-none d-md-flex ms-3 align-items-center">
+            <Link to="/servicios" className={styles.navlink}>
+              Servicios
+            </Link>
+            <Link to="/contacto" className={styles.navlink}>
+              Contacto
+            </Link>
+          </div>
+        </nav>
+        <div className="d-md-none ms-auto">
+          <FaBars
+            size={28}
+            color="#fff"
+            style={{ cursor: "pointer" }}
+            onClick={handleShow}
+          />
+        </div>
+        <Offcanvas
+          show={show}
+          onHide={handleClose}
+          placement="end"
+          className={styles.offcanvas}
+        >
+          <Offcanvas.Header closeButton className="bg-black">
+            <Offcanvas.Title id="offcanvasNavbarLabel">
+              <img style={{ width: "5rem" }} src={logoNuevo} alt="" />
+            </Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body className="bg-black">
+            <div className="d-flex flex-column flex-md-row align-items-md-center gap-3">
+              <Link
+                to="/servicios"
+                className={styles.navlink}
+                onClick={handleClose}
+              >
+                Servicios
+              </Link>
+              <Link
+                to="/contacto"
+                className={styles.navlink}
+                onClick={handleClose}
+              >
+                Contacto
+              </Link>
+            </div>
+          </Offcanvas.Body>
+        </Offcanvas>
       </Container>
     </Navbar>
   );

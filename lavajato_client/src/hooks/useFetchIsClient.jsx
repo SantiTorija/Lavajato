@@ -19,9 +19,9 @@ const useIsClient = () => {
       );
       if (response.data) {
         dispatch(addClient(response.data[0]));
-        navigate("/confirmar-datos");
+        navigate(`/reservas/${email}`);
       } else {
-        navigate(`/datos-cliente/${email}`);
+        navigate(`/reservas/${email}`);
       }
       setError(null);
     } catch (err) {

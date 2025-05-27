@@ -17,8 +17,8 @@ function MoreInfoModal(props) {
         <Modal.Body>
           <p>
             {props.serviceType === "Lavado completo"
-              ? "Incluye limpieza exterior con shampoo especial, enjuague a presión y secado manual. También se realiza limpieza interior con aspirado de alfombras, asientos y baúl, limpieza de vidrios y paneles."
-              : "Además del lavado completo, se aplica cera de alta calidad para proteger la pintura, realzar el brillo y repeler el agua y la suciedad por más tiempo."}
+              ? "Incluye: lavado exterior, aspirado completo, acondicionador de plásticos interiores, limpieza de vidrios,  abrillantador de neumáticos. "
+              : "Incluye:  lavado exterior, aspirado completo, acondicionador de plásticos interiores, limpieza de vidrios, abrillantador de neumáticos. Encerado exterior con cera Malco, generando mayor brillo y protección"}
           </p>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-center">

@@ -12,34 +12,44 @@
   width: 9rem;
 }
 
-.card{
-    border: 3px solid rgb(204,119,65);
-    background-color: rgb(34,162,171);
-    color: white;
-    width: 30%;
+.warning{
+  border: 1px solid rgba(255, 0, 0, 0.431);
+  border-radius: 10px;
+  padding: .5rem;
+  text-align: justify;
+  font-size: .8rem;
+}
+
+.card{   
+  
+    color: rgb(0, 0, 0);
+    width: 50%;
     text-align: left;
-    padding: 1rem;
+    padding: 1rem !important;
     
 }
 
 /* Dispositivos pequeños (teléfonos en modo retrato y dispositivos menores a 576px) */
 @media (max-width: 575.98px) {
   .card{  
-    width: 80%;    
+    width: 100%;    
+}
+.font{
+  font-size: .9rem
 }
 }
 
 /* Dispositivos medianos (tabletas y dispositivos con ancho entre 576px y 768px) */
 @media (min-width: 576px) and (max-width: 767.98px) {
   .card{  
-    width: 90%;    
+    width: 100%;    
 }
 }
 
 /* Dispositivos grandes (escritorios y dispositivos con ancho entre 768px y 992px) */
 @media (min-width: 768px) and (max-width: 991.98px) {
   .card{  
-    width: 60%;    
+    width: 100%;    
 }
 }
 

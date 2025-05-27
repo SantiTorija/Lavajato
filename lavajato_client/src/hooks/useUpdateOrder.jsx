@@ -15,8 +15,8 @@ const useUpdateOrder = () => {
         method: "PUT",
         url: `${import.meta.env.VITE_API_URL}/order/${
           orderToEdit.id
-        }/?dateToEdit=${orderToEdit.cart[0].date}&&slotToEdit=${
-          orderToEdit.cart[0].slot
+        }/?dateToEdit=${orderToEdit.cart.date}&&slotToEdit=${
+          orderToEdit.cart.slot
         }`,
         headers: {
           "Content-Type": "application/json",

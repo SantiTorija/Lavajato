@@ -20,10 +20,11 @@ const useChangeDate = () => {
       const responseClient = await axios.get(
         `${import.meta.env.VITE_API_URL}/client/${email.trim()}`
       );
+      console.log(responseOrder.data);
       if (responseOrder.data.length > 0) {
         dispatch(addReserveToEdit(responseOrder.data[0]));
         dispatch(addClient(responseClient.data[0]));
-        navigate("/calendario");
+        navigate(`/reservas/${email}`);
       } else {
         console.log(responseOrder.data.length);
         alert(`no hay reserva`);
