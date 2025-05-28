@@ -8,6 +8,9 @@ import { Container, Row, Form, Button } from "react-bootstrap";
 import styles from "./clientDataForm.module.css";
 import useStoreClient from "../hooks/useStoreClient";
 import Footer from "../components/Footer";
+import { emptyCart } from "../redux/cartSlice";
+import { removeClient } from "../redux/clientSlice";
+import { emptyOrderToEdit } from "../redux/orderToEditSlice";
 
 const ClientDataForm = () => {
   const dispatch = useDispatch();
@@ -44,6 +47,13 @@ const ClientDataForm = () => {
       })
     );
     dispatch(next());
+  };
+
+  const handleBack = () => {
+    dispatch(emptyCart());
+    dispatch(removeClient());
+    dispatch(emptyOrderToEdit());
+    navigate("/");
   };
 
   return (
@@ -140,6 +150,7 @@ const ClientDataForm = () => {
               className="back-button w-50"
               type="button"
               disabled={!carType || !firstname || !lastname}
+              onClick={handleBack}
             >
               Atrás
             </Button>

@@ -19,6 +19,7 @@ const useStoreOrder = (date, slot) => {
           lastname: order.lastname,
           phone: order.phone,
           cart: order.cart,
+          clientId: order.clientId,
         },
       });
       setError(null);

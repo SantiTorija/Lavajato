@@ -13,7 +13,7 @@ import Footer from "../components/Footer";
 import WhatsappButton from "../components/WhatsappButton";
 
 function Confirmation() {
-  const { firstname, lastname, email, carType } = useSelector(
+  const { firstname, lastname, email, carType, id } = useSelector(
     (state) => state.client
   );
   const orders = useSelector((state) => state.orders);
@@ -40,6 +40,7 @@ function Confirmation() {
         cart: cart,
         total: cart.total,
         service: cart.service,
+        clientId: id,
       });
 
       dispatch(emptyCart());

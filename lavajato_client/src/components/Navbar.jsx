@@ -3,21 +3,42 @@ import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import styles from "./navbar.module.css";
 import logoNuevo from "../assets/images/logoNuevo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa6";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { emptyCart } from "../redux/cartSlice";
+import { removeClient } from "../redux/clientSlice";
+import { emptyOrderToEdit } from "../redux/orderToEditSlice";
+import { setStartStep } from "../redux/reserveStepSlice";
 
 function NavbarComponent() {
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    dispatch(emptyCart());
+    dispatch(removeClient());
+    dispatch(emptyOrderToEdit());
+    dispatch(setStartStep());
+    navigate("/");
+  };
 
   return (
     <Navbar expand="md" className={styles.navbar}>
       <Container>
         <nav className="d-flex align-items-center justify-content-between">
-          <Navbar.Brand as={Link} to="/">
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            onClick={handleLogoClick}
+            style={{ cursor: "pointer" }}
+          >
             <img style={{ width: "7rem" }} src={logoNuevo} alt="" />
           </Navbar.Brand>
           <div className="d-none d-md-flex ms-3 align-items-center">

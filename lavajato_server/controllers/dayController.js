@@ -30,7 +30,6 @@ const dayController = {
         },
         attributes: ["date", "slots_available"],
       });
-      console.log(days);
 
       res.json(days);
     } catch (error) {

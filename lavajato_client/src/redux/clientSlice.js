@@ -12,6 +12,7 @@ const clientSlice = createSlice({
       state.marca = action.payload.car.marca;
       state.modelo = action.payload.car.modelo;
       state.carType = action.payload.car.carType;
+      state.clientId = action.payload.clientId;
     },
     removeClient(state) {
       Object.keys(state).forEach((key) => delete state[key]);
